@@ -7,6 +7,10 @@ plugins {
 android {
     namespace = "com.example.miappbasica"
     compileSdk = 36
+    buildFeatures {
+        viewBinding = true
+        compose = true
+    }
 
     defaultConfig {
         applicationId = "com.example.miappbasica"

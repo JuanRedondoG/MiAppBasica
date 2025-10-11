@@ -1,156 +1,133 @@
 package com.example.miappbasica.ui.screen
-// Paquete donde se definen las pantallas de la aplicación
 
 // ===== IMPORTS =====
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.miappbasica.R // Asegúrate de tener tus imágenes en res/drawable
+import com.example.miappbasica.R // Asegúrate de tener imágenes en res/drawable
 
-// ===== COMPOSABLE =====
+// ===== COMPOSABLE PRINCIPAL =====
 @Composable
 fun InicioScreen(navController: NavHostController) {
-
-    // Estructura general de la pantalla
+    // Añadimos un scroll vertical para que quepa todo el contenido
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
+            .verticalScroll(rememberScrollState()) // Permite desplazar toda la pantalla
+            .padding(bottom = 16.dp)
     ) {
 
-        // ===== BOTÓN SUPERIOR IZQUIERDO =====
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start
-        ) {
-            Button(
-                onClick = { navController.navigate("perfil") },
-                modifier = Modifier.height(40.dp)
-            ) {
-                Text("Ir a Perfil", style = MaterialTheme.typography.bodyMedium)
-            }
-        }
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        // ===== TÍTULO PRINCIPAL =====
-        Text(
-            text = "Mi Aplicación Genérica",
-            style = MaterialTheme.typography.headlineLarge.copy(
-                fontWeight = FontWeight.Bold,
-                fontSize = 30.sp
-            ),
-            color = MaterialTheme.colorScheme.secondary
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = "Bienvenido, disfruta la experiencia con Compose",
-            style = MaterialTheme.typography.bodyLarge
-        )
-
-        // ===== BANNER DECORATIVO =====
-        Spacer(modifier = Modifier.height(24.dp))
+        // ===== BANNER DE NOVEDADES (ERA TU BANNER DECORATIVO) =====
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(180.dp)
-                .background(MaterialTheme.colorScheme.primaryContainer),
-            contentAlignment = Alignment.Center
+                .height(220.dp)
+                .clickable { /* Navegar al cómic destacado */ }, // Hazlo interactivo
+            contentAlignment = Alignment.BottomStart
         ) {
-            // Si tienes una imagen real en drawable, reemplaza este Box por:
-            // Image(painter = painterResource(id = R.drawable.banner_inicio), contentDescription = "Banner de inicio")
+            Image(
+                painter = painterResource(id = R.drawable.comic_banner_placeholder), // Usa una imagen atractiva aquí
+                contentDescription = "Nuevo lanzamiento",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop // Asegura que la imagen cubra el espacio
+            )
+            // Título superpuesto sobre el banner
             Text(
-                text = "Banner de la App",
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                style = MaterialTheme.typography.titleMedium
+                text = "¡NUEVO! Las Aventuras de Astro",
+                style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
+                color = Color.White,
+                modifier = Modifier.padding(16.dp)
             )
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // ===== CARD 1 =====
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            shape = RoundedCornerShape(12.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
-        ) {
-            Row(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                    contentDescription = "Imagen 1",
-                    modifier = Modifier
-                        .size(64.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Text(
-                    text = "Esta es la primera tarjeta de ejemplo. Aquí puedes colocar información relevante, como una descripción corta de tu app o un dato destacado.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Start
-                )
-            }
-        }
+        // ===== SECCIÓN: CONTINUAR LEYENDO =====
+        SeccionComics(
+            titulo = "Continuar Leyendo",
+            comics = listOf(R.drawable.comic_cover_1, R.drawable.comic_cover_2) // Lista de portadas
+        )
 
-        // ===== CARD 2 =====
-        Card(
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // ===== SECCIÓN: LOS MÁS POPULARES =====
+        SeccionComics(
+            titulo = "Los más Populares",
+            comics = listOf(R.drawable.comic_cover_3, R.drawable.comic_cover_4, R.drawable.comic_cover_1)
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // ===== BOTÓN PARA IR A "MI COLECCIÓN" =====
+        Button(
+            onClick = { navController.navigate("coleccion") }, // Navega a la colección del usuario
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            shape = RoundedCornerShape(12.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+                .padding(horizontal = 16.dp)
+                .height(50.dp)
         ) {
-            Row(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                    contentDescription = "Imagen 2",
-                    modifier = Modifier
-                        .size(64.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Text(
-                    text = "Esta es la segunda tarjeta. Puedes usarla para mostrar noticias, opciones, o enlaces a otras secciones de tu aplicación.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Start
-                )
+            Text("Ver Mi Colección Completa", fontSize = 16.sp)
+        }
+    }
+}
+
+// ===== COMPOSABLE REUTILIZABLE PARA LAS "ESTANTERÍAS" DE CÓMICS =====
+@Composable
+fun SeccionComics(titulo: String, comics: List<Int>) {
+    Column(modifier = Modifier.padding(start = 16.dp)) {
+        Text(
+            text = titulo,
+            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+            color = MaterialTheme.colorScheme.onSurface
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+        // Fila horizontal que se puede desplazar (scroll)
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(end = 16.dp)
+        ) {
+            items(comics) { comicCoverResId ->
+                ComicCard(imageResId = comicCoverResId)
             }
         }
     }
 }
 
-/*
-📘 Explicación rápida:
 
-1️⃣ Botón superior → navega a la pantalla "Perfil".
-2️⃣ Banner → caja visual que representa la cabecera de la app (puede ser imagen o color).
-3️⃣ Card 1 → tarjeta con imagen y texto de ejemplo.
-4️⃣ Card 2 → otra tarjeta similar para mostrar contenido adicional.
-5️⃣ Todo usa Material 3 con sombras y esquinas redondeadas.
-*/
+// ===== COMPOSABLE PARA LA TARJETA DE UN CÓMIC INDIVIDUAL =====
+@Composable
+fun ComicCard(imageResId: Int) {
+    Card(
+        modifier = Modifier
+            .width(140.dp) // Ancho fijo para las portadas
+            .clickable { /* Navegar a los detalles de este cómic */ },
+        shape = RoundedCornerShape(8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+    ) {
+        Image(
+            painter = painterResource(id = imageResId),
+            contentDescription = "Portada de cómic",
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp), // Altura fija
+            contentScale = ContentScale.Crop // La imagen se ajusta y recorta
+        )
+    }
+}
