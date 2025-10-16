@@ -4,23 +4,39 @@ package com.example.miappbasica
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.miappbasica.navigation.AppNavigation // Importamos la navegación de la app
-import com.example.miappbasica.ui.theme.MiAppBasicaTheme // Importamos el tema visual de la app
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import com.example.miappbasica.ui.theme.LocalThemeState
+import com.example.miappbasica.ui.theme.ThemeState
+import com.example.miappbasica.navigation.AppNavigation
+import com.example.miappbasica.ui.theme.MiAppBasicaTheme
+
 
 // ===== ACTIVIDAD PRINCIPAL =====
 // MainActivity es el punto de entrada de la aplicación Android
 class MainActivity : ComponentActivity() {
-
-    // Método que se ejecuta cuando la actividad se crea
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // setContent → establece el contenido de la UI usando Jetpack Compose
         setContent {
-            // Aplicamos el tema personalizado de la app
-            MiAppBasicaTheme {
-                // 🚀 Llamamos a la función que maneja toda la navegación
-                AppNavigation()
+            // Obtenemos el valor booleano actual de nuestro estado global
+            val isDarkTheme by ThemeState.isDarkTheme
+
+            // Proveemos el estado del tema a toda la app
+            CompositionLocalProvider(LocalThemeState provides ThemeState) {
+                MiAppBasicaTheme(
+                    darkTheme = isDarkTheme // Pasamos el valor a nuestro tema
+                ) {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        AppNavigation()
+                    }
+                }
             }
         }
     }
