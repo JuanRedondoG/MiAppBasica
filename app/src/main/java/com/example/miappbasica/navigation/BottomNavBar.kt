@@ -32,7 +32,7 @@ fun BottomNavBar(navController: NavHostController) {
     // Lista de ítems que aparecerán en la barra inferior
     val items = listOf(
         NavItem("Inicio", "inicio", Icons.Filled.Home),
-        NavItem("Perfil", "perfil", Icons.Filled.Person),
+        NavItem("coleccion", "coleccion", Icons.Filled.Person),
         NavItem("Config", "configuracion", Icons.Filled.Settings),
         NavItem("Acerca", "acerca", Icons.Filled.Info)
     )
