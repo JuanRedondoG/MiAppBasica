@@ -9,9 +9,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.miappbasica.ui.screen.AcercaDeScreen
+import com.example.miappbasica.ui.screen.ColeccionScreen
 import com.example.miappbasica.ui.screen.ConfiguracionScreen
 import com.example.miappbasica.ui.screen.InicioScreen
-import com.example.miappbasica.ui.screen.PerfilScreen
+
 
 // Función principal de navegación de la app
 @Composable
@@ -34,7 +35,7 @@ fun AppNavigation() {
             composable("inicio") { InicioScreen(navController) }
 
             // Pantalla de Perfil
-            composable("perfil") { PerfilScreen(navController) }
+            composable("coleccion") { ColeccionScreen(navController) }
 
             // Pantalla de Configuración
             composable("configuracion") { ConfiguracionScreen(navController) }
