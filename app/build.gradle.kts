@@ -45,6 +45,26 @@ android {
 
 dependencies {
 
+    // BOM (Bill of Materials) para Compose. Importa esto primero.
+    // Gestiona las versiones de todas las demás librerías de Compose.
+    val composeBom = platform("androidx.compose:compose-bom:2024.09.00")
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+
+    // Dependencias de Compose (sin especificar versión, el BOM se encarga)
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.activity:activity-compose") // Solo una vez
+
+    // Dependencia de Navigation Compose (sin especificar versión)
+    implementation("androidx.navigation:navigation-compose")
+
+    // Otras dependencias
+    implementation("androidx.core:core-ktx:1.17.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
+
     implementation("androidx.navigation:navigation-compose:2.7.5")
     implementation("androidx.activity:activity-compose:1.8.0")
     implementation("androidx.compose.material3:material3:1.1.2")
