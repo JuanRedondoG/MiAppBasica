@@ -10,21 +10,28 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavHostController
+import com.example.miappbasica.ui.theme.LocalThemeState // Importamos el proveedor del estado del tema
 
 // ===== COMPOSABLE =====
 @Composable
 fun ConfiguracionScreen(navController: NavHostController) {
 
-    // Variables locales para simular configuraciones
-    var modoNocturno by remember { mutableStateOf(false) }
+    // ===== ESTADO =====
+    // Obtenemos el estado del tema desde el CompositionLocal.
+    val themeState = LocalThemeState.current
+    // 'isDarkTheme' se suscribe a los cambios del estado global.
+    val isDarkTheme by themeState.isDarkTheme
+
+    // Variables locales para otras configuraciones (estas solo afectan a esta pantalla).
     var notificaciones by remember { mutableStateOf(true) }
     var idiomaSeleccionado by remember { mutableStateOf("Español") }
     var sonidoActivado by remember { mutableStateOf(true) }
@@ -90,13 +97,17 @@ fun ConfiguracionScreen(navController: NavHostController) {
                         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                     )
                     Text(
-                        text = if (modoNocturno) "Modo Nocturno Activado" else "Modo Clásico Activado",
+                        // El texto ahora lee el estado global 'isDarkTheme'.
+                        text = if (isDarkTheme) "Modo Nocturno Activado" else "Modo Clásico Activado",
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
                 Switch(
-                    checked = modoNocturno,
-                    onCheckedChange = { modoNocturno = it }
+                    // El interruptor lee y actualiza el estado global.
+                    checked = isDarkTheme,
+                    onCheckedChange = { nuevoValor ->
+                        themeState.isDarkTheme.value = nuevoValor
+                    }
                 )
             }
         }
@@ -146,7 +157,7 @@ fun ConfiguracionScreen(navController: NavHostController) {
                     text = "Idioma",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                 )
-                Divider()
+                Divider(modifier = Modifier.padding(vertical = 8.dp))
                 Text(
                     text = "Idioma actual: $idiomaSeleccionado",
                     style = MaterialTheme.typography.bodyMedium
@@ -194,7 +205,7 @@ fun ConfiguracionScreen(navController: NavHostController) {
             }
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.weight(1f)) // Empuja el botón hacia abajo
 
         // ===== BOTÓN PARA VOLVER AL INICIO =====
         Button(
@@ -205,8 +216,11 @@ fun ConfiguracionScreen(navController: NavHostController) {
         ) {
             Text("Volver al Inicio", style = MaterialTheme.typography.titleMedium)
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
+
 
 /*
 📘 Explicación rápida:
