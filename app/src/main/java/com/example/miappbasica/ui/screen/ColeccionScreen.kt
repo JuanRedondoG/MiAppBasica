@@ -67,12 +67,12 @@ fun ColeccionScreen(navController: NavHostController) {
 
             Button(
                 onClick = {
-                    // Esta acción es la correcta para "volver atrás"
-                    navController.popBackStack()
+                    navController.popBackStack() //accion para volver atras
                 },
-                // El padding horizontal ya no es necesario aquí
+
                 modifier = Modifier
-                    .fillMaxWidth() // Ocupa el ancho completo
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
                     .height(50.dp)
             ) {
                 // Estilo de texto idéntico al botón de InicioScreen

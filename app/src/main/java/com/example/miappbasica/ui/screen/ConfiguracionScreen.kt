@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.*
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -157,7 +158,11 @@ fun ConfiguracionScreen(navController: NavHostController) {
                     text = "Idioma",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                 )
-                Divider(modifier = Modifier.padding(vertical = 8.dp))
+                HorizontalDivider(
+                    modifier = Modifier.padding(vertical = 8.dp),
+                    thickness = DividerDefaults.Thickness,
+                    color = DividerDefaults.color
+                )
                 Text(
                     text = "Idioma actual: $idiomaSeleccionado",
                     style = MaterialTheme.typography.bodyMedium
@@ -209,15 +214,14 @@ fun ConfiguracionScreen(navController: NavHostController) {
 
         // ===== BOTÓN PARA VOLVER AL INICIO =====
         Button(
-            onClick = { navController.navigate("inicio") },
+            onClick = { navController.navigate("inicio") }, // Navega a la colección del usuario
             modifier = Modifier
-                .fillMaxWidth(0.7f)
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
                 .height(50.dp)
         ) {
-            Text("Volver al Inicio", style = MaterialTheme.typography.titleMedium)
+            Text("Volver al inicio", fontSize = 16.sp)
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 

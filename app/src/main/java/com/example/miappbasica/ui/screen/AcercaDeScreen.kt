@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,6 +19,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 
 // ===== COMPOSABLE =====
 @Composable
@@ -27,6 +30,7 @@ fun AcercaDeScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
@@ -100,7 +104,7 @@ fun AcercaDeScreen(navController: NavHostController) {
                     text = "Desarrollador",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                 )
-                Divider()
+                HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
                 Text(
                     text = "Profesor Jorge Niochet",
                     style = MaterialTheme.typography.bodyMedium
@@ -125,7 +129,7 @@ fun AcercaDeScreen(navController: NavHostController) {
                     text = "Descripción",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                 )
-                Divider()
+                HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
                 Text(
                     text = "Esta aplicación fue creada con Jetpack Compose para enseñar los fundamentos del desarrollo móvil moderno. Combina navegación, diseño con Material 3 y componentes interactivos.",
                     style = MaterialTheme.typography.bodyMedium,
@@ -147,7 +151,7 @@ fun AcercaDeScreen(navController: NavHostController) {
                     text = "Contacto",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                 )
-                Divider()
+                HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
                 Text("📧 Email: contacto@duocuc.cl", style = MaterialTheme.typography.bodyMedium)
                 Text("🌐 Web: www.duoc.cl", style = MaterialTheme.typography.bodyMedium)
                 Text("📍 Ubicación: San Joaquín, Santiago - Chile", style = MaterialTheme.typography.bodySmall)
@@ -158,14 +162,16 @@ fun AcercaDeScreen(navController: NavHostController) {
 
         // ===== BOTÓN PARA VOLVER AL INICIO =====
         Button(
-            onClick = { navController.navigate("inicio") },
+            onClick = { navController.navigate("inicio") }, // Navega a la colección del usuario
             modifier = Modifier
-                .fillMaxWidth(0.7f)
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
                 .height(50.dp)
         ) {
-            Text("Volver al Inicio", style = MaterialTheme.typography.titleMedium)
+            Text("Volver al inicio", fontSize = 16.sp)
         }
     }
+
 }
 
 /*
