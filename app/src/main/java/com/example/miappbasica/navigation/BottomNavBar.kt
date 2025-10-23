@@ -1,7 +1,7 @@
 package com.example.miappbasica.navigation
 // Paquete donde se define la barra de navegación inferior de la app
 
-// ===== IMPORTS =====
+// ===== IMPORTS =====import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -25,16 +25,18 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 
 import androidx.compose.ui.graphics.vector.ImageVector
 // Tipo de dato que representa íconos vectoriales
+import com.example.miappbasica.R
+import androidx.compose.ui.res.stringResource
 
 // ===== COMPOSABLE =====
 @Composable
 fun BottomNavBar(navController: NavHostController) {
     // Lista de ítems que aparecerán en la barra inferior
     val items = listOf(
-        NavItem("Inicio", "inicio", Icons.Filled.Home),
-        NavItem("coleccion", "coleccion", Icons.Filled.Person),
-        NavItem("Config", "configuracion", Icons.Filled.Settings),
-        NavItem("Acerca", "acerca", Icons.Filled.Info)
+        NavItem(R.string.navbar_inicio, "inicio", Icons.Filled.Home),
+        NavItem(R.string.navbar_coleccion, "coleccion", Icons.Filled.Person),
+        NavItem(R.string.navbar_config, "configuracion", Icons.Filled.Settings),
+        NavItem(R.string.navbar_acerca, "acerca", Icons.Filled.Info)
     )
 
     // Componente que dibuja la barra inferior
@@ -45,12 +47,17 @@ fun BottomNavBar(navController: NavHostController) {
 
         // Recorremos todos los ítems de la barra y los pintamos
         items.forEach { item ->
-            NavigationBarItem(
-                // Ícono del ítem
-                icon = { Icon(item.icon, contentDescription = item.title) },
+            // ===== PASO 1: OBTENER EL TEXTO TRADUCIDO =====
+            // Usamos el ID del recurso para obtener el string correcto según el idioma.
+            val title = stringResource(id = item.titleResId)
 
-                // Texto debajo del ícono
-                label = { Text(text = item.title) },
+            NavigationBarItem(
+                // ===== PASO 2: USAR EL TEXTO TRADUCIDO =====
+                // Ícono del ítem. Ahora 'contentDescription' usa el texto traducido.
+                icon = { Icon(item.icon, contentDescription = title) },
+
+                // Texto debajo del ícono. Ahora 'label' usa el texto traducido.
+                label = { Text(text = title) },
 
                 // Se marca como seleccionado si coincide con la ruta actual
                 selected = currentRoute == item.route,
@@ -73,11 +80,10 @@ fun BottomNavBar(navController: NavHostController) {
 
 // ===== DATA CLASS =====
 // Representa cada ítem de la barra inferior
-// - title → texto mostrado
-// - route → nombre de la ruta de navegación
-// - icon  → ícono que acompaña el texto
-data class NavItem(val title: String, val route: String, val icon: ImageVector)
-
+// - titleResId → ID del recurso de string (ej. R.string.navbar_inicio)
+// - route      → nombre de la ruta de navegación
+// - icon       → ícono que acompaña el texto
+data class NavItem(val titleResId: Int, val route: String, val icon: ImageVector)
 /*
 Explicación general:
 

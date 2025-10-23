@@ -1,3 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MiAppBasica</string>
+    <!-- El nombre de tu app -->
+    <string name="app_name" translatable="false">MiAppBasica</string>
+
+    <!-- Textos de ConfiguracionScreen en Español -->
+    <string name="configuracion_titulo">Configuración de la Aplicación</string>
+    <string name="configuracion_tema">Tema de la Aplicación</string>
+    <string name="tema_modo_nocturno">Modo Nocturno Activado</string>
+    <string name="tema_modo_clasico">Modo Clásico Activado</string>
+    <string name="notificaciones">Notificaciones</string>
+    <string name="notificaciones_activadas">Activadas</string>
+    <string name="notificaciones_desactivadas">Desactivadas</string>
+    <string name="idioma">Idioma</string>
+    <string name="idioma_actual">Idioma actual: %1$s</string>
+    <string name="sonido_vibracion">Sonido / Vibración</string>
+    <string name="sonido_activado">Sonido Activado</string>
+    <string name="sonido_silencio">Silenciado</string>
+    <string name="volver_inicio">Volver al Inicio</string>
+    <!-- Textos para la Barra de Navegación -->
+    <string name="navbar_inicio">Inicio</string>
+    <string name="navbar_coleccion">Colección</string>
+    <string name="navbar_config">Config</string>
+    <string name="navbar_acerca">Acerca</string>
+    <string name="lang_es">Español</string>
+    <string name="lang_en">Inglés</string>
+    <!-- Textos para la pantalla Home -->
+    <string name="home_nuevo">¡NUEVO! Las Aventuras de Astro</string>
+    <string name="home_continuar_leyendo">Continuar Leyendo</string><string name="home_mas_populares">Los más Populares</string>
+    <string name="home_ver_coleccion">Ver Mi Colección Completa</string>
+
+    <!-- Textos para la pantalla Colección -->
+    <string name="collection_titulo">Mi Colección</string>
+    <string name="collection_watchmen_titulo">Watchmen</string>
+    <string name="collection_watchmen_autor">por Alan Moore</string>
+    <string name="collection_watchmen_desc">Una deconstrucción del género de superhéroes…</string>
+    <string name="collection_dkr_titulo">The Dark Knight Returns</string>
+    <string name="collection_dkr_autor">por Frank Miller</string>
+    <string name="collection_dkr_desc">Un Batman envejecido vuelve de su retiro…</string>
+    <!-- ... (justo después de las de DKR) -->
+    <string name="collection_maus_titulo">Maus</string>
+    <string name="collection_maus_autor">por Art Spiegelman</string>
+    <string name="collection_maus_desc">Una novela gráfica que narra la experiencia del padre del autor…</string>
+    <string name="collection_saga_titulo">Saga, Vol. 1</string>
+    <string name="collection_saga_autor">por Brian K. Vaughan</string>
+    <string name="collection_saga_desc">Dos soldados de razas extraterrestres en guerra…</string>
+    <string name="collection_walkingdead_titulo">The Walking Dead</string>
+    <string name="collection_walkingdead_autor">por Robert Kirkman</string>
+    <string name="collection_walkingdead_desc">Tras un apocalipsis zombi, un grupo de supervivientes…</string>
+
+    <!-- ... (y así sucesivamente para Maus, Saga, The Walking Dead, etc.) -->
+
+    <!-- Textos para la pantalla About -->
+    <string name="about_titulo">Acerca de esta aplicación</string>
+    <string name="about_app_titulo">Mi Aplicación Genérica</string>
+    <string name="about_app_version">Versión 1.0.0</string>
+    <string name="about_app_actualizacion">Última actualización: Octubre 2025</string>
+    <string name="about_desarrollador_titulo">Desarrollador</string>
+    <string name="about_desarrollador_nombre">Profesor Jorge Naschel</string>
+    <string name="about_desarrollador_escuela">Escuela de Informática – Duoc UC San Joaquín</string>
+    <string name="about_descripcion_titulo">Descripción</string>
+    <string name="about_descripcion_texto">Esta aplicación fue creada con Jetpack Compose para enseñar los fundamentos del desarrollo móvil moderno. Combina navegación, diseño con Material 3 y componentes interactivos.</string>
+    <string name="about_contacto_titulo">Contacto</string>
+    <string name="about_contacto_email">Email: contacto@duoc.cl</string>
+    <string name="about_contacto_web">Web: www.duoc.cl</string>
+    <string name="about_contacto_ubicacion">Ubicación: San Joaquín, Santiago - Chile</string>
+    <string name="about_volver_inicio">Volver al inicio</string>
+
+
+
 </resources>

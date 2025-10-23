@@ -2,8 +2,9 @@ package com.example.miappbasica
 // Paquete principal de la app
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+// import androidx.activity.ComponentActivity // <-- YA NO SE USA ESTE
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity // <-- 1. SE IMPORTA LA CLASE CORRECTA
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -18,7 +19,7 @@ import com.example.miappbasica.ui.theme.MiAppBasicaTheme
 
 // ===== ACTIVIDAD PRINCIPAL =====
 // MainActivity es el punto de entrada de la aplicación Android
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() { // <-- 2. SE HEREDA DE LA CLASE CORRECTA
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -43,10 +44,12 @@ class MainActivity : ComponentActivity() {
 }
 /*Explicación rápida:
 
-MainActivity → Es la actividad principal, el punto de entrada de tu app Android.
+MainActivity → Ahora hereda de AppCompatActivity, lo que "activa" el motor de AppCompat
+               para que el cambio de idioma funcione.
 
 setContent { ... } → Reemplaza los tradicionales XML layouts y define la interfaz con Compose.
 
 MiAppBasicaTheme → Aplica los colores, tipografía y estilos globales definidos en tu tema.
 
-AppNavigation() → Carga el sistema de navegación de tu app (el NavHost y la BottomNavBar).*/
+AppNavigation() → Carga el sistema de navegación de tu app (el NavHost y la BottomNavBar).
+tema de navegación de tu app (el NavHost y la BottomNavBar).*/

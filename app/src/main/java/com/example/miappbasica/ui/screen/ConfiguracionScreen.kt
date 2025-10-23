@@ -15,27 +15,51 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.miappbasica.ui.theme.LocalThemeState // Importamos el proveedor del estado del tema
+import com.example.miappbasica.R
+import com.example.miappbasica.idiomas.LocaleHelper
+import com.example.miappbasica.idiomas.LocaleManager
+import com.example.miappbasica.ui.theme.LocalThemeState
 
 // ===== COMPOSABLE =====
 @Composable
 fun ConfiguracionScreen(navController: NavHostController) {
 
-    // ===== ESTADO =====
-    // Obtenemos el estado del tema desde el CompositionLocal.
+    // ===== ESTADOS =====
     val themeState = LocalThemeState.current
-    // 'isDarkTheme' se suscribe a los cambios del estado global.
     val isDarkTheme by themeState.isDarkTheme
-
-    // Variables locales para otras configuraciones (estas solo afectan a esta pantalla).
     var notificaciones by remember { mutableStateOf(true) }
-    var idiomaSeleccionado by remember { mutableStateOf("Español") }
     var sonidoActivado by remember { mutableStateOf(true) }
 
+    // =================================================================
+// ===== LÓGICA DE IDIOMA - VERSIÓN FINAL-FINAL-RECONTRAFINAL =====
+// =================================================================
+// 1. Obtenemos el contexto
+    val context = LocalContext.current
+//2. Creamos un estado local que podamos modificar AL INSTANTE.
+//    Lo inicializamos con el idioma actual del sistema.
+    var idiomaSeleccionado by remember {
+        mutableStateOf(LocaleManager.languageCode.value)
+    }
+    // 3. Observamos el StateFlow, pero solo para actualizar nuestro estado local
+//    si el idioma cambia desde fuera de esta pantalla.
+    LaunchedEffect(Unit) {
+        LocaleManager.languageCode.collect { nuevoCodigoSistema ->
+            idiomaSeleccionado = nuevoCodigoSistema
+        }
+    }
+    // 4. La función de cambio ahora hace DOS cosas:
+//    - Llama al helper para cambiar el idioma de TODA la app.
+//    - Actualiza NUESTRO estado local INMEDIATAMENTE para forzar la recomposición.
+    val cambiarIdioma = { nuevoCodigoIdioma: String ->
+        LocaleHelper.setLocale(context, nuevoCodigoIdioma)
+        idiomaSeleccionado = nuevoCodigoIdioma
+    }
     // ===== ESTRUCTURA GENERAL =====
     Column(
         modifier = Modifier
@@ -56,7 +80,7 @@ fun ConfiguracionScreen(navController: NavHostController) {
         ) {
             Icon(
                 imageVector = Icons.Filled.Settings,
-                contentDescription = "Ícono de configuración",
+                contentDescription = stringResource(id = R.string.configuracion_titulo),
                 tint = MaterialTheme.colorScheme.onPrimaryContainer,
                 modifier = Modifier.size(80.dp)
             )
@@ -66,7 +90,7 @@ fun ConfiguracionScreen(navController: NavHostController) {
 
         // ===== TÍTULO =====
         Text(
-            text = "Configuración de la Aplicación",
+            text = stringResource(id = R.string.configuracion_titulo),
             style = MaterialTheme.typography.titleLarge.copy(
                 fontWeight = FontWeight.Bold,
                 fontSize = 22.sp
@@ -93,17 +117,15 @@ fun ConfiguracionScreen(navController: NavHostController) {
             ) {
                 Column {
                     Text(
-                        text = "Tema de la Aplicación",
+                        text = stringResource(id = R.string.configuracion_tema),
                         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                     )
                     Text(
-                        // El texto ahora lee el estado global 'isDarkTheme'.
-                        text = if (isDarkTheme) "Modo Nocturno Activado" else "Modo Clásico Activado",
+                        text = if (isDarkTheme) stringResource(id = R.string.tema_modo_nocturno) else stringResource(id = R.string.tema_modo_clasico),
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
                 Switch(
-                    // El interruptor lee y actualiza el estado global.
                     checked = isDarkTheme,
                     onCheckedChange = { nuevoValor ->
                         themeState.isDarkTheme.value = nuevoValor
@@ -129,11 +151,11 @@ fun ConfiguracionScreen(navController: NavHostController) {
             ) {
                 Column {
                     Text(
-                        text = "Notificaciones",
+                        text = stringResource(id = R.string.notificaciones),
                         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                     )
                     Text(
-                        text = if (notificaciones) "Activadas" else "Desactivadas",
+                        text = if (notificaciones) stringResource(id = R.string.notificaciones_activadas) else stringResource(id = R.string.notificaciones_desactivadas),
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
@@ -144,7 +166,7 @@ fun ConfiguracionScreen(navController: NavHostController) {
             }
         }
 
-        // ===== CARD 3: IDIOMA =====
+        // ===== CARD 3: IDIOMA (VERSIÓN FINAL) =====
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -154,21 +176,40 @@ fun ConfiguracionScreen(navController: NavHostController) {
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Idioma",
+                    text = stringResource(id = R.string.idioma),
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                 )
-                Divider(modifier = Modifier.padding(vertical = 8.dp))
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+
+                // ===== TEXTO DE ESTADO CORREGIDO =====
                 Text(
-                    text = "Idioma actual: $idiomaSeleccionado",
+                    text = stringResource(
+                        id = R.string.idioma_actual, // "Current language: %1$s" o "Idioma actual: %1$s"
+                        stringResource(if (idiomaSeleccionado == "es") R.string.lang_es else R.string.lang_en) // Pasa "Español", "English", etc.
+                    ),
                     style = MaterialTheme.typography.bodyMedium
                 )
+                // ======================================
+
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Button(onClick = { idiomaSeleccionado = "Español" }) { Text("Español") }
-                    Button(onClick = { idiomaSeleccionado = "Inglés" }) { Text("Inglés") }
+                    // ===== BOTONES CON TEXTO DE RECURSO =====
+                    Button(
+                        onClick = { cambiarIdioma("es") },
+                        enabled = idiomaSeleccionado != "es"
+                    ) {
+                        Text(stringResource(id = R.string.lang_es)) // Usa el recurso
+                    }
+                    Button(
+                        onClick = { cambiarIdioma("en") },
+                        enabled = idiomaSeleccionado != "en"
+                    ) {
+                        Text(stringResource(id = R.string.lang_en)) // Usa el recurso
+                    }
+                    // ========================================
                 }
             }
         }
@@ -190,11 +231,11 @@ fun ConfiguracionScreen(navController: NavHostController) {
             ) {
                 Column {
                     Text(
-                        text = "Sonido / Vibración",
+                        text = stringResource(id = R.string.sonido_vibracion),
                         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                     )
                     Text(
-                        text = if (sonidoActivado) "Sonido Activado" else "Silencio",
+                        text = if (sonidoActivado) stringResource(id = R.string.sonido_activado) else stringResource(id = R.string.sonido_silencio),
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
@@ -211,13 +252,15 @@ fun ConfiguracionScreen(navController: NavHostController) {
         Button(
             onClick = { navController.navigate("inicio") },
             modifier = Modifier
-                .fillMaxWidth(0.7f)
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
                 .height(50.dp)
         ) {
-            Text("Volver al Inicio", style = MaterialTheme.typography.titleMedium)
+            Text(
+                text = stringResource(id = R.string.volver_inicio),
+                fontSize = 16.sp
+            )
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 

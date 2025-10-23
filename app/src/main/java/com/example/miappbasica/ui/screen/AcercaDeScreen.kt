@@ -4,8 +4,10 @@ package com.example.miappbasica.ui.screen
 // ===== IMPORTS =====
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
@@ -13,11 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource // <-- 1. IMPORTANTE
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.miappbasica.R // <-- 2. IMPORTANTE
 
 // ===== COMPOSABLE =====
 @Composable
@@ -27,6 +31,7 @@ fun AcercaDeScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
@@ -43,7 +48,8 @@ fun AcercaDeScreen(navController: NavHostController) {
         ) {
             Icon(
                 imageVector = Icons.Filled.Info,
-                contentDescription = "Ícono de información",
+                // ANTES: contentDescription = "Ícono de información",
+                contentDescription = stringResource(id = R.string.about_titulo), // <-- DESPUÉS
                 tint = MaterialTheme.colorScheme.onPrimaryContainer,
                 modifier = Modifier.size(80.dp)
             )
@@ -53,7 +59,8 @@ fun AcercaDeScreen(navController: NavHostController) {
 
         // ===== TÍTULO =====
         Text(
-            text = "Acerca de esta aplicación",
+            // ANTES: text = "Acerca de esta aplicación",
+            text = stringResource(id = R.string.about_titulo), // <-- DESPUÉS
             style = MaterialTheme.typography.titleLarge.copy(
                 fontWeight = FontWeight.Bold,
                 fontSize = 22.sp
@@ -73,15 +80,18 @@ fun AcercaDeScreen(navController: NavHostController) {
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Mi Aplicación Genérica",
+                    // ANTES: text = "Mi Aplicación Genérica",
+                    text = stringResource(id = R.string.about_app_titulo), // <-- DESPUÉS
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                 )
                 Text(
-                    text = "Versión 1.0.0",
+                    // ANTES: text = "Versión 1.0.0",
+                    text = stringResource(id = R.string.about_app_version), // <-- DESPUÉS
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Text(
-                    text = "Última actualización: Octubre 2025",
+                    // ANTES: text = "Última actualización: Octubre 2025",
+                    text = stringResource(id = R.string.about_app_actualizacion), // <-- DESPUÉS
                     style = MaterialTheme.typography.bodySmall
                 )
             }
@@ -97,16 +107,19 @@ fun AcercaDeScreen(navController: NavHostController) {
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Desarrollador",
+                    // ANTES: text = "Desarrollador",
+                    text = stringResource(id = R.string.about_desarrollador_titulo), // <-- DESPUÉS
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                 )
-                Divider()
+                HorizontalDivider()
                 Text(
-                    text = "Profesor Jorge Niochet",
+                    // ANTES: text = "Profesor Jorge Niochet",
+                    text = stringResource(id = R.string.about_desarrollador_nombre), // <-- DESPUÉS
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Text(
-                    text = "Escuela de Informática — Duoc UC San Joaquín",
+                    // ANTES: text = "Escuela de Informática — Duoc UC San Joaquín",
+                    text = stringResource(id = R.string.about_desarrollador_escuela), // <-- DESPUÉS
                     style = MaterialTheme.typography.bodySmall
                 )
             }
@@ -122,12 +135,14 @@ fun AcercaDeScreen(navController: NavHostController) {
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Descripción",
+                    // ANTES: text = "Descripción",
+                    text = stringResource(id = R.string.about_descripcion_titulo), // <-- DESPUÉS
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                 )
-                Divider()
+                HorizontalDivider()
                 Text(
-                    text = "Esta aplicación fue creada con Jetpack Compose para enseñar los fundamentos del desarrollo móvil moderno. Combina navegación, diseño con Material 3 y componentes interactivos.",
+                    // ANTES: text = "Esta aplicación fue creada con Jetpack Compose...",
+                    text = stringResource(id = R.string.about_descripcion_texto), // <-- DESPUÉS
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Justify
                 )
@@ -144,13 +159,26 @@ fun AcercaDeScreen(navController: NavHostController) {
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Contacto",
+                    // ANTES: text = "Contacto",
+                    text = stringResource(id = R.string.about_contacto_titulo), // <-- DESPUÉS
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                 )
-                Divider()
-                Text("📧 Email: contacto@duocuc.cl", style = MaterialTheme.typography.bodyMedium)
-                Text("🌐 Web: www.duoc.cl", style = MaterialTheme.typography.bodyMedium)
-                Text("📍 Ubicación: San Joaquín, Santiago - Chile", style = MaterialTheme.typography.bodySmall)
+                HorizontalDivider()
+                Text(
+                    // ANTES: "📧 Email: contacto@duocuc.cl",
+                    text = "📧 ${stringResource(id = R.string.about_contacto_email)}", // <-- DESPUÉS con formato
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    // ANTES: "🌐 Web: www.duoc.cl",
+                    text = "🌐 ${stringResource(id = R.string.about_contacto_web)}", // <-- DESPUÉS con formato
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    // ANTES: "📍 Ubicación: San Joaquín, Santiago - Chile",
+                    text = "📍 ${stringResource(id = R.string.about_contacto_ubicacion)}", // <-- DESPUÉS con formato
+                    style = MaterialTheme.typography.bodySmall
+                )
             }
         }
 
@@ -160,13 +188,19 @@ fun AcercaDeScreen(navController: NavHostController) {
         Button(
             onClick = { navController.navigate("inicio") },
             modifier = Modifier
-                .fillMaxWidth(0.7f)
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
                 .height(50.dp)
         ) {
-            Text("Volver al Inicio", style = MaterialTheme.typography.titleMedium)
+            Text(
+                // ANTES: text = "Volver al inicio",
+                text = stringResource(id = R.string.about_volver_inicio), // <-- DESPUÉS
+                fontSize = 16.sp
+            )
         }
     }
 }
+
 
 /*
 📘 Explicación rápida:

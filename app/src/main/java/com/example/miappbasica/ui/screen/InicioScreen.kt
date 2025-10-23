@@ -13,44 +13,43 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource // <-- 1. ASEGÚRATE DE IMPORTAR ESTO
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.miappbasica.R // Asegúrate de tener imágenes en res/drawable
+import com.example.miappbasica.R
 
 // ===== COMPOSABLE PRINCIPAL =====
 @Composable
 fun InicioScreen(navController: NavHostController) {
-    // Añadimos un scroll vertical para que quepa todo el contenido
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState()) // Permite desplazar toda la pantalla
+            .verticalScroll(rememberScrollState())
             .padding(bottom = 16.dp)
     ) {
 
-        // ===== BANNER DE NOVEDADES (ERA TU BANNER DECORATIVO) =====
+        // ===== BANNER DE NOVEDADES =====
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(220.dp)
-                .clickable { /* Navegar al cómic destacado */ }, // Hazlo interactivo
+                .clickable { /* Navegar al cómic destacado */ },
             contentAlignment = Alignment.BottomStart
         ) {
             Image(
-                painter = painterResource(id = R.drawable.comic_banner_placeholder), // Usa una imagen atractiva aquí
-                contentDescription = "Nuevo lanzamiento",
+                painter = painterResource(id = R.drawable.comic_banner_placeholder),
+                contentDescription = stringResource(id = R.string.home_nuevo), // DESPUÉS: Descripción accesible
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop // Asegura que la imagen cubra el espacio
+                contentScale = ContentScale.Crop
             )
-            // Título superpuesto sobre el banner
             Text(
-                text = "¡NUEVO! Las Aventuras de Astro",
+                // ANTES: text = "¡NUEVO! Las Aventuras de Astro",
+                text = stringResource(id = R.string.home_nuevo), // <-- DESPUÉS
                 style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
                 color = Color.White,
                 modifier = Modifier.padding(16.dp)
@@ -61,15 +60,17 @@ fun InicioScreen(navController: NavHostController) {
 
         // ===== SECCIÓN: CONTINUAR LEYENDO =====
         SeccionComics(
-            titulo = "Continuar Leyendo",
-            comics = listOf(R.drawable.comic_cover_1, R.drawable.comic_cover_2) // Lista de portadas
+            // ANTES: titulo = "Continuar Leyendo",
+            titulo = stringResource(id = R.string.home_continuar_leyendo), // <-- DESPUÉS
+            comics = listOf(R.drawable.comic_cover_1, R.drawable.comic_cover_2)
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
         // ===== SECCIÓN: LOS MÁS POPULARES =====
         SeccionComics(
-            titulo = "Los más Populares",
+            // ANTES: titulo = "Los más Populares",
+            titulo = stringResource(id = R.string.home_mas_populares), // <-- DESPUÉS
             comics = listOf(R.drawable.comic_cover_3, R.drawable.comic_cover_4, R.drawable.comic_cover_1)
         )
 
@@ -77,13 +78,17 @@ fun InicioScreen(navController: NavHostController) {
 
         // ===== BOTÓN PARA IR A "MI COLECCIÓN" =====
         Button(
-            onClick = { navController.navigate("coleccion") }, // Navega a la colección del usuario
+            onClick = { navController.navigate("coleccion") },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
                 .height(50.dp)
         ) {
-            Text("Ver Mi Colección Completa", fontSize = 16.sp)
+            Text(
+                // ANTES: text = "Ver Mi Colección Completa",
+                text = stringResource(id = R.string.home_ver_coleccion), // <-- DESPUÉS
+                fontSize = 16.sp
+            )
         }
     }
 }
@@ -93,12 +98,11 @@ fun InicioScreen(navController: NavHostController) {
 fun SeccionComics(titulo: String, comics: List<Int>) {
     Column(modifier = Modifier.padding(start = 16.dp)) {
         Text(
-            text = titulo,
+            text = titulo, // Aquí no se cambia, porque ya recibe el string traducido como parámetro
             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
             color = MaterialTheme.colorScheme.onSurface
         )
         Spacer(modifier = Modifier.height(12.dp))
-        // Fila horizontal que se puede desplazar (scroll)
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(end = 16.dp)
@@ -116,18 +120,20 @@ fun SeccionComics(titulo: String, comics: List<Int>) {
 fun ComicCard(imageResId: Int) {
     Card(
         modifier = Modifier
-            .width(140.dp) // Ancho fijo para las portadas
+            .width(140.dp)
             .clickable { /* Navegar a los detalles de este cómic */ },
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Image(
             painter = painterResource(id = imageResId),
-            contentDescription = "Portada de cómic",
+            // La descripción del contenido de las portadas puede ser genérica
+            // o podrías pasarla como parámetro si cada cómic tuviera un nombre.
+            contentDescription = "Portada de cómic", // Por ahora, se puede quedar así.
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp), // Altura fija
-            contentScale = ContentScale.Crop // La imagen se ajusta y recorta
+                .height(200.dp),
+            contentScale = ContentScale.Crop
         )
     }
 }
