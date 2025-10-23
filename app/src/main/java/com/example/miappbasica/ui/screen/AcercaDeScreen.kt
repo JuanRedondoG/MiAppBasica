@@ -81,7 +81,7 @@ fun AcercaDeScreen(navController: NavHostController) {
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                 )
                 Text(
-                    text = "Versión 1.0.0",
+                    text = "Versión 1.0.1",
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Text(
@@ -106,7 +106,39 @@ fun AcercaDeScreen(navController: NavHostController) {
                 )
                 HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
                 Text(
-                    text = "Profesor Jorge Niochet",
+                    text = "Juan Redondo",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    text = "Escuela de Informática — Duoc UC San Joaquín",
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "Desarrollador",
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                )
+                Divider()
+                Text(
+                    text = "W. Mauricio Palominos",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    text = "Escuela de Informática — Duoc UC San Joaquín",
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "Desarrollador",
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                )
+                Divider()
+                Text(
+                    text = "Sebastian Cortés",
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Text(
