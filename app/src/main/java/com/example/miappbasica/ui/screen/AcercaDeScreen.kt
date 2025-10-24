@@ -2,6 +2,7 @@ package com.example.miappbasica.ui.screen
 // Paquete donde se definen las pantallas de la aplicación
 
 // ===== IMPORTS =====
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -21,6 +22,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import com.example.miappbasica.R
 
 // ===== COMPOSABLE =====
 @Composable
@@ -45,19 +49,21 @@ fun AcercaDeScreen(navController: NavHostController) {
                 .background(MaterialTheme.colorScheme.primaryContainer),
             contentAlignment = Alignment.Center
         ) {
-            Icon(
-                imageVector = Icons.Filled.Info,
-                contentDescription = "Ícono de información",
-                tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                modifier = Modifier.size(80.dp)
+
+            Image(
+                painter = painterResource(id = R.drawable.comic_banner_placeholder), // Usa una imagen atractiva aquí
+                contentDescription = "Nuevo lanzamiento",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop // Asegura que la imagen cubra el espacio
             )
+
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // ===== TÍTULO =====
         Text(
-            text = "Acerca de esta aplicación",
+            text = "Acerca de The Adventures of.. App",
             style = MaterialTheme.typography.titleLarge.copy(
                 fontWeight = FontWeight.Bold,
                 fontSize = 22.sp
@@ -77,7 +83,7 @@ fun AcercaDeScreen(navController: NavHostController) {
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Mi Aplicación Genérica",
+                    text = "The Adventures of ...",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                 )
                 Text(
@@ -101,7 +107,7 @@ fun AcercaDeScreen(navController: NavHostController) {
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Desarrollador",
+                    text = "Desarrolladores",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                 )
                 HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
@@ -116,10 +122,7 @@ fun AcercaDeScreen(navController: NavHostController) {
             }
 
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = "Desarrollador",
-                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
-                )
+
                 Divider()
                 Text(
                     text = "W. Mauricio Palominos",
@@ -132,10 +135,7 @@ fun AcercaDeScreen(navController: NavHostController) {
             }
 
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = "Desarrollador",
-                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
-                )
+
                 Divider()
                 Text(
                     text = "Sebastian Cortés",
@@ -163,7 +163,7 @@ fun AcercaDeScreen(navController: NavHostController) {
                 )
                 HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
                 Text(
-                    text = "Esta aplicación fue creada con Jetpack Compose para enseñar los fundamentos del desarrollo móvil moderno. Combina navegación, diseño con Material 3 y componentes interactivos.",
+                    text = "La app fue creada con el objetivo de publicar nuevos comics para su difusión a través de esta plataforma. Combina navegación, diseño y componentes interactivos.",
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Justify
                 )
