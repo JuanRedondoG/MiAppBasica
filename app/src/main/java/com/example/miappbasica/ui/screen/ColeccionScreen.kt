@@ -7,46 +7,37 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource // <-- 1. IMPORTANTE
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.miappbasica.R // <-- 2. IMPORTANTE
 
-// ... (data class Comic y la lista misComics permanecen igual) ...
-data class Comic(
-    val id: Int,
-    val titulo: String,
-    val autor: String,
-    val sinopsis: String
-)
-
-val misComics = listOf(
-    Comic(1, "Watchmen", "Alan Moore", "Una deconstrucción del género de superhéroes..."),
-    Comic(2, "The Dark Knight Returns", "Frank Miller", "Un Batman envejecido vuelve de su retiro..."),
-    Comic(3, "Maus", "Art Spiegelman", "Una novela gráfica que narra la experiencia del padre del autor..."),
-    Comic(4, "Saga, Vol. 1", "Brian K. Vaughan", "Dos soldados de razas extraterrestres en guerra..."),
-    Comic(5, "The Walking Dead", "Robert Kirkman", "Tras un apocalipsis zombi, un grupo de supervivientes...")
-)
+// ===== YA NO NECESITAMOS LA DATA CLASS NI LA LISTA AQUÍ =====
+// data class Comic(...)
+// val misComics = listOf(...)
 
 
 // ===== COMPOSABLE =====
 @Composable
 fun ColeccionScreen(navController: NavHostController) {
-    // utilizamos un LazyColumn para desplazar la aplicacion.
-    // asi todos los elementos se podran desplazar unidos.
+    // 3. Obtenemos la lista de cómics desde nuestra nueva fuente de datos reactiva
+    val misComics = getMisComics()
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        contentPadding = PaddingValues(horizontal = 16.dp) // Padding lateral para todos los elementos
+        contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         // ===== 1. Título de la pantalla =====
         item {
             Text(
-                text = "Mi Colección",
+                // ANTES: text = "Mi Colección",
+                text = stringResource(id = R.string.collection_titulo), // <-- DESPUÉS
                 style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(vertical = 24.dp),
                 color = MaterialTheme.colorScheme.primary
@@ -54,32 +45,28 @@ fun ColeccionScreen(navController: NavHostController) {
         }
 
         // ===== 2. Lista de Cómics =====
-        // Creamos una Card por cada cómic en la lista "misComics"
         items(misComics) { comic ->
-            // Le quitamos el padding horizontal al ComicCardItem porque ya lo tiene el LazyColumn
             ComicCardItem(comic = comic)
         }
 
         // ===== 3. Botón para volver al inicio =====
         item {
-            // Espacio entre la lista y el botón
             Spacer(modifier = Modifier.height(24.dp))
-
             Button(
                 onClick = {
-                    navController.popBackStack() //accion para volver atras
+                    navController.popBackStack()
                 },
-
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
+                    // .padding(horizontal = 16.dp) // <-- Lo eliminamos, el LazyColumn ya lo tiene
                     .height(50.dp)
             ) {
-                // Estilo de texto idéntico al botón de InicioScreen
-                Text("Volver al Inicio", fontSize = 16.sp)
+                // ANTES: Text("Volver al Inicio", fontSize = 16.sp)
+                Text(
+                    text = stringResource(id = R.string.about_volver_inicio), // <-- DESPUÉS (reutilizamos la string de "About")
+                    fontSize = 16.sp
+                )
             }
-
-            // Espacio final para que el botón no quede pegado al borde inferior
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
@@ -87,6 +74,7 @@ fun ColeccionScreen(navController: NavHostController) {
 
 /**
  * Composable que define cómo se ve cada elemento (cómic) en la lista.
+ * ESTE COMPOSABLE NO NECESITA CAMBIOS, ya que recibe los textos traducidos.
  */
 @Composable
 fun ComicCardItem(comic: Comic) {
@@ -108,14 +96,13 @@ fun ComicCardItem(comic: Comic) {
                 style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
             )
             Text(
-                text = "por ${comic.autor}",
+                // Modificamos ligeramente para que no diga "por por Alan Moore"
+                text = comic.autor,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             HorizontalDivider(
                 modifier = Modifier.padding(vertical = 8.dp),
-                thickness = DividerDefaults.Thickness,
-                color = DividerDefaults.color
             )
             Text(
                 text = comic.sinopsis,

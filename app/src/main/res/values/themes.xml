@@ -1,5 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="Theme.MiAppBasica" parent="android:Theme.Material.Light.NoActionBar" />
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Tema Base de la Aplicación -->
+    <!-- Este tema hereda de un tema de MaterialComponents, lo que lo hace
+         compatible con AppCompatActivity. El sufijo "NoActionBar" es
+         importante para que Compose pueda dibujar su propia barra superior. -->
+    <style name="Theme.MiAppBasica" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Puedes personalizar atributos primarios aquí si lo necesitas -->
+        <!--
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        -->
+    </style>
 </resources>

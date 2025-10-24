@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>    <resources>
+    <!-- Textos de ConfiguracionScreen traducidos -->
+    <string name="configuracion_titulo">Application Settings</string>
+    <string name="configuracion_tema">Application Theme</string>
+    <string name="tema_modo_nocturno">Night Mode On</string>
+    <string name="tema_modo_clasico">Classic Mode On</string>
+    <string name="notificaciones">Notifications</string>
+    <string name="notificaciones_activadas">Enabled</string>
+    <string name="notificaciones_desactivadas">Disabled</string>
+    <string name="idioma">Language</string>
+    <string name="idioma_actual">Current language: %1$s</string>
+    <string name="sonido_vibracion">Sound / Vibration</string>
+    <string name="sonido_activado">Sound On</string>
+    <string name="sonido_silencio">Muted</string>
+    <string name="volver_inicio">Back to Home</string>
+    <!-- Texts for the Navigation Bar -->
+    <string name="navbar_inicio">Home</string>
+    <string name="navbar_coleccion">Collection</string>
+    <string name="navbar_config">Settings</string>
+    <string name="navbar_acerca">About</string>
+    <string name="lang_es">Spanish</string>
+    <string name="lang_en">English</string>
+    <!-- Texts for Home Screen -->
+    <string name="home_nuevo">NEW! The Adventures of Astro</string>
+    <string name="home_continuar_leyendo">Continue Reading</string><string name="home_mas_populares">Most Popular</string>
+    <string name="home_ver_coleccion">View My Full Collection</string>
+
+    <!-- Texts for Collection Screen -->
+    <string name="collection_titulo">My Collection</string>
+    <string name="collection_watchmen_titulo">Watchmen</string>
+    <string name="collection_watchmen_autor">by Alan Moore</string>
+    <string name="collection_watchmen_desc">A deconstruction of the superhero genre…</string>
+    <string name="collection_dkr_titulo">The Dark Knight Returns</string>
+    <string name="collection_dkr_autor">by Frank Miller</string>
+    <string name="collection_dkr_desc">An aged Batman returns from retirement…</string>
+    <!-- ... (just after the DKR ones) -->
+    <string name="collection_maus_titulo">Maus</string>
+    <string name="collection_maus_autor">by Art Spiegelman</string>
+    <string name="collection_maus_desc">A graphic novel that chronicles the author\'s father\'s experience…</string>
+    <string name="collection_saga_titulo">Saga, Vol. 1</string>
+    <string name="collection_saga_autor">by Brian K. Vaughan</string>
+    <string name="collection_saga_desc">Two soldiers from warring alien races…</string>
+    <string name="collection_walkingdead_titulo">The Walking Dead</string>
+    <string name="collection_walkingdead_autor">by Robert Kirkman</string>
+    <string name="collection_walkingdead_desc">After a zombie apocalypse, a group of survivors…</string>
+
+    <!-- ... (and so on for Maus, Saga, The Walking Dead, etc.) -->
+
+    <!-- Texts for About Screen -->
+    <string name="about_titulo">About this application</string>
+    <string name="about_app_titulo">My Generic Application</string>
+    <string name="about_app_version">Version 1.0.0</string>
+    <string name="about_app_actualizacion">Last update: October 2025</string>
+    <string name="about_desarrollador_titulo">Developer</string>
+    <string name="about_desarrollador_nombre">Professor Jorge Naschel</string>
+    <string name="about_desarrollador_escuela">School of Informatics – Duoc UC San Joaquín</string>
+    <string name="about_descripcion_titulo">Description</string>
+    <string name="about_descripcion_texto">This application was created with Jetpack Compose to teach the fundamentals of modern mobile development. It combines navigation, Material 3 design, and interactive components.</string>
+    <string name="about_contacto_titulo">Contact</string>
+    <string name="about_contacto_email">Email: contacto@duoc.cl</string>
+    <string name="about_contacto_web">Web: www.duoc.cl</string>
+    <string name="about_contacto_ubicacion">Location: San Joaquín, Santiago - Chile</string>
+    <string name="about_volver_inicio">Back to Home</string>
+
+
+</resources>
