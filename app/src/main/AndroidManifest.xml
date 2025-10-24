@@ -11,17 +11,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MiAppBasica">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.MiAppBasica">
+            android:theme="@style/Theme.MiAppBasica"
+            android:configChanges="locale|layoutDirection|orientation|screenSize|keyboardHidden|uiMode"> <!-- LÍNEA AÑADIDA -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- =============================================================== -->
+        <!-- =====   AÑADIDO PARA LA PERSISTENCIA DEL IDIOMA           ===== -->
+        <!-- Este servicio le dice a la librería de AppCompat que debe     -->
+        <!-- guardar y restaurar automáticamente la selección de idioma.    -->
+        <!-- =============================================================== -->
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
+        <!-- =============================================================== -->
+
     </application>
 
 </manifest>
