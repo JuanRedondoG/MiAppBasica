@@ -83,7 +83,7 @@ fun AcercaDeScreen(navController: NavHostController) {
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Mi Aplicación Genérica",
+                    text = "The Adventures of...",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                 )
                 Text(
