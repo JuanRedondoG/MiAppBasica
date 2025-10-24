@@ -2,6 +2,7 @@ package com.example.miappbasica.ui.screen
 // Paquete donde se definen las pantallas de la aplicación
 
 // ===== IMPORTS =====
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -21,6 +22,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import com.example.miappbasica.R
 
 // ===== COMPOSABLE =====
 @Composable
@@ -45,11 +50,12 @@ fun AcercaDeScreen(navController: NavHostController) {
                 .background(MaterialTheme.colorScheme.primaryContainer),
             contentAlignment = Alignment.Center
         ) {
-            Icon(
-                imageVector = Icons.Filled.Info,
-                contentDescription = "Ícono de información",
-                tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                modifier = Modifier.size(80.dp)
+            Image(
+                painter = painterResource(id = R.drawable.comic_banner_placeholder),
+                contentDescription = stringResource(id = R.string.home_nuevo), // DESPUÉS: Descripción accesible
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+
             )
         }
 
@@ -57,7 +63,7 @@ fun AcercaDeScreen(navController: NavHostController) {
 
         // ===== TÍTULO =====
         Text(
-            text = "Acerca de esta aplicación",
+            text = "Acerca de The Adventures of... App",
             style = MaterialTheme.typography.titleLarge.copy(
                 fontWeight = FontWeight.Bold,
                 fontSize = 22.sp
@@ -116,10 +122,7 @@ fun AcercaDeScreen(navController: NavHostController) {
             }
 
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = "Desarrollador",
-                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
-                )
+
                 Divider()
                 Text(
                     text = "W. Mauricio Palominos",
@@ -132,10 +135,7 @@ fun AcercaDeScreen(navController: NavHostController) {
             }
 
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = "Desarrollador",
-                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
-                )
+
                 Divider()
                 Text(
                     text = "Sebastian Cortés",
@@ -163,7 +163,7 @@ fun AcercaDeScreen(navController: NavHostController) {
                 )
                 HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
                 Text(
-                    text = "Esta aplicación fue creada con Jetpack Compose para enseñar los fundamentos del desarrollo móvil moderno. Combina navegación, diseño con Material 3 y componentes interactivos.",
+                    text = "Esta app fue creada con el objetivo de publicar comics de diversos autores. Combina navegación, diseño y componentes interactivos.",
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Justify
                 )
@@ -206,14 +206,4 @@ fun AcercaDeScreen(navController: NavHostController) {
 
 }
 
-/*
-📘 Explicación rápida:
 
-1️⃣ Ícono de información grande y centrado.
-2️⃣ Card 1 → nombre de la app y versión.
-3️⃣ Card 2 → información del desarrollador.
-4️⃣ Card 3 → descripción o propósito de la app.
-5️⃣ Card 4 → medios de contacto o redes sociales.
-6️⃣ Botón inferior → regresa al inicio.
-7️⃣ Todo sigue el mismo formato visual (espaciado, colores, esquinas redondeadas).
-*/
