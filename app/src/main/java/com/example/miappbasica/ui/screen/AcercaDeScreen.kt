@@ -61,7 +61,7 @@ fun AcercaDeScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // ===== TÍTULO =====
+        // ===== TÍTULO DE LA APLICACION=====
         Text(
             text = "Acerca de The Adventures of... App",
             style = MaterialTheme.typography.titleLarge.copy(
