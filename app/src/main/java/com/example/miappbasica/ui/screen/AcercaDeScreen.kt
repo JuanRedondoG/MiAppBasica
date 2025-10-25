@@ -97,7 +97,7 @@ fun AcercaDeScreen(navController: NavHostController) {
             }
         }
 
-        // ===== CARD 2: DESARROLLADOR =====
+        // ===== CARD 2: DESARROLLADORES =====
         Card(
             modifier = Modifier
                 .fillMaxWidth()
