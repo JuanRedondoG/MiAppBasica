@@ -107,7 +107,7 @@ fun AcercaDeScreen(navController: NavHostController) {
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Desarrollador",
+                    text = "Desarrolladores",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                 )
                 HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
