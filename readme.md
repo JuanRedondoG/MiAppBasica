@@ -1,13 +1,10 @@
-# Mi Aplicación de Cómics - Proyecto Demo con Jetpack Compose
-
-![Captura de Pantalla de la App](https'://i.imgur.com/URL_DE_LA_IMAGEN_DE_TU_APP.gif')
-<!-- Sube un GIF de tu app funcionando (como los que me enviaste) a un sitio como imgur.com y pega el enlace aquí -->
+# Aplicación de Cómics - Proyecto Demo con Jetpack Compose
 
 Este es un proyecto de aplicación para Android desarrollado como una demostración de los fundamentos del desarrollo móvil moderno utilizando **Jetpack Compose**. La aplicación simula una biblioteca de cómics, permitiendo al usuario navegar por diferentes secciones, ver su colección y configurar preferencias.
 
 El propósito principal de este repositorio es servir como material de aprendizaje y consulta sobre la implementación de características clave en Android.
 
-## ✨ Características Principales
+## Características Principales
 
 -   **UI 100% Declarativa con Jetpack Compose**: Toda la interfaz de usuario está construida con el moderno toolkit de Android, sin usar XML.
 -   **Navegación Robusta**: Implementación de `NavHost` y `BottomNavBar` para una navegación fluida entre las diferentes pantallas (Inicio, Colección, Configuración, Acerca de).
@@ -22,7 +19,7 @@ El propósito principal de este repositorio es servir como material de aprendiza
     -   Uso de `StateFlow` para gestionar y observar el estado de forma reactiva.
 -   **Diseño con Material 3**: Implementación de los componentes y guías de diseño de Material Design 3.
 
-## 🛠️ Tecnologías y Librerías Utilizadas
+## Tecnologías y Librerías Utilizadas
 
 -   **Lenguaje**: [Kotlin](https://kotlinlang.org/)
 -   **UI Toolkit**: [Jetpack Compose](https://developer.android.com/jetpack/compose)
@@ -37,7 +34,7 @@ El propósito principal de este repositorio es servir como material de aprendiza
     -   `androidx.appcompat:appcompat` (Crucial para el sistema de idiomas)
     -   `com.google.android.material:material` (Necesaria para los temas de AppCompat)
 
-## 🎯 Puntos Clave y Aprendizajes del Proyecto
+## Puntos Clave y Aprendizajes del Proyecto
 
 Este proyecto fue un ejercicio práctico para solucionar problemas comunes en el desarrollo de Android con Compose:
 
@@ -51,7 +48,4 @@ Este proyecto fue un ejercicio práctico para solucionar problemas comunes en el
 
 3.  **Compatibilidad entre Vistas y Compose**: Fue necesario añadir la librería de `Material Components` para vistas y ajustar los temas en `themes.xml` para asegurar la compatibilidad con `AppCompatActivity`, incluso en un proyecto 100% Compose.
 
-## 🚀 Cómo Ejecutar el Proyecto
-
-1.  Clona este repositorio:
     
