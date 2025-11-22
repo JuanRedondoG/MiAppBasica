@@ -1,6 +1,10 @@
 package com.example.miappbasica.ui.screen
 
 // ===== IMPORTS =====
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,35 +13,81 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource // <-- 1. ASEGÚRATE DE IMPORTAR ESTO
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import com.example.miappbasica.R
 
 // ===== COMPOSABLE PRINCIPAL =====
 @Composable
 fun InicioScreen(navController: NavHostController) {
+    // ===== MANEJO DE LA CÁMARA Y PERMISOS =====
+    val context = LocalContext.current
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicturePreview()
+    ) { bitmap ->
+        // Aquí puedes manejar el bitmap de la foto tomada (por ahora no hacemos nada).
+    }
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // Permiso concedido, lanzar la cámara.
+            cameraLauncher.launch(null)
+        } else {
+            // Permiso denegado. Idealmente, aquí mostrarías un mensaje al usuario.
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(bottom = 16.dp)
     ) {
-        // ===== Contenedor para el botón de Login =====
+        // ===== Contenedor para botones superiores =====
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
+            IconButton(
+                onClick = {
+                    // Comprobar si el permiso ya está concedido
+                    when (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)) {
+                        PackageManager.PERMISSION_GRANTED -> {
+                            // Si ya tenemos permiso, lanzamos la cámara
+                            cameraLauncher.launch(null)
+                        }
+                        else -> {
+                            // Si no, pedimos el permiso
+                            permissionLauncher.launch(Manifest.permission.CAMERA)
+                        }
+                    }
+                },
+                modifier = Modifier.align(Alignment.CenterStart)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.QrCodeScanner,
+                    contentDescription = "Escanear QR",
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
+            }
+
             Button(
                 onClick = { navController.navigate("login") },
                 modifier = Modifier.align(Alignment.CenterEnd)
