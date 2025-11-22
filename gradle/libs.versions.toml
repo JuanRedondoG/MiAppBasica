@@ -1,6 +1,6 @@
 [versions]
 # Versiones de Plugins de Android y Kotlin
-agp = "8.3.1"
+agp = "8.13.0"
 kotlin = "1.9.22"
 
 # Versiones de Librerías
