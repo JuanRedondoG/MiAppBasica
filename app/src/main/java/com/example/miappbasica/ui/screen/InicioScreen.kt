@@ -32,6 +32,19 @@ fun InicioScreen(navController: NavHostController) {
             .verticalScroll(rememberScrollState())
             .padding(bottom = 16.dp)
     ) {
+        // ===== Contenedor para el botón de Login =====
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+        ) {
+            Button(
+                onClick = { navController.navigate("login") },
+                modifier = Modifier.align(Alignment.CenterEnd)
+            ) {
+                Text("Login")
+            }
+        }
 
         // ===== BANNER DE NOVEDADES =====
         Box(
@@ -98,7 +111,7 @@ fun InicioScreen(navController: NavHostController) {
 fun SeccionComics(titulo: String, comics: List<Int>) {
     Column(modifier = Modifier.padding(start = 16.dp)) {
         Text(
-            text = titulo, // Aquí no se cambia, porque ya recibe el string traducido como parámetro
+            text = titulo, // ANTES: text = titulo,
             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
             color = MaterialTheme.colorScheme.onSurface
         )

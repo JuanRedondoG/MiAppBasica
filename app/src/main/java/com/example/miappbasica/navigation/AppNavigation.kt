@@ -4,14 +4,18 @@ package com.example.miappbasica.navigation
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.miappbasica.ui.screen.AcercaDeScreen
 import com.example.miappbasica.ui.screen.ColeccionScreen
 import com.example.miappbasica.ui.screen.ConfiguracionScreen
 import com.example.miappbasica.ui.screen.InicioScreen
+import com.example.miappbasica.ui.screen.LoginScreen
+import com.example.miappbasica.ui.screen.RegisterScreen
 
 
 // Función principal de navegación de la app
@@ -19,11 +23,21 @@ import com.example.miappbasica.ui.screen.InicioScreen
 fun AppNavigation() {
     // Controlador de navegación → maneja el historial y las rutas activas
     val navController = rememberNavController()
+    // Observamos el estado del back stack para saber la ruta actual
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    // Lista de rutas donde queremos que la barra de navegación sea visible
+    val bottomBarRoutes = setOf("inicio", "coleccion", "configuracion", "acerca")
 
     // Scaffold es la estructura base de la UI en Compose
-    // Aquí lo usamos para colocar la barra de navegación inferior en todas las pantallas
     Scaffold(
-        bottomBar = { BottomNavBar(navController) } // Barra inferior personalizada
+        bottomBar = {
+            // Mostramos la barra solo si la ruta actual está en nuestra lista
+            if (currentRoute in bottomBarRoutes) {
+                BottomNavBar(navController)
+            }
+        }
     ) { innerPadding ->
         // NavHost → contiene todas las rutas (pantallas) de la app
         NavHost(
@@ -31,10 +45,18 @@ fun AppNavigation() {
             startDestination = "inicio",         // Ruta inicial al abrir la app
             modifier = Modifier.padding(innerPadding) // Respeta padding del Scaffold
         ) {
+            // --- RUTAS DE LA APP ---
+
+            // Ruta para la pantalla de Login (sin barra de navegación)
+            composable("login") { LoginScreen(navController) }
+            
+            // Ruta para la pantalla de Registro
+            composable("register") { RegisterScreen(navController) }
+
             // Pantalla de Inicio
             composable("inicio") { InicioScreen(navController) }
 
-            // Pantalla de Perfil
+            // Pantalla de Colección
             composable("coleccion") { ColeccionScreen(navController) }
 
             // Pantalla de Configuración
