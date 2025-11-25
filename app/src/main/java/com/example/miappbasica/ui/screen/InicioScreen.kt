@@ -14,6 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -23,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource // <-- 1. ASEGÚRATE DE IMPORTAR ESTO
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,7 +34,7 @@ import com.example.miappbasica.R
 
 // ===== COMPOSABLE PRINCIPAL =====
 @Composable
-fun InicioScreen(navController: NavHostController) {
+fun InicioScreen(navController: NavHostController, username: String?) {
     // ===== MANEJO DE LA CÁMARA Y PERMISOS =====
     val context = LocalContext.current
     val cameraLauncher = rememberLauncherForActivityResult(
@@ -88,11 +89,36 @@ fun InicioScreen(navController: NavHostController) {
                 )
             }
 
-            Button(
-                onClick = { navController.navigate("login") },
-                modifier = Modifier.align(Alignment.CenterEnd)
-            ) {
-                Text("Login")
+            // Mostramos el saludo o el botón de Login
+            if (username != null) {
+                Row(
+                    modifier = Modifier.align(Alignment.CenterEnd),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "hola, $username",
+                        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    IconButton(onClick = {
+                        navController.navigate("inicio") {
+                            // Limpiamos el historial para que no se pueda volver atrás
+                            popUpTo(0)
+                        }
+                    }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.Logout,
+                            contentDescription = "Cerrar Sesión"
+                        )
+                    }
+                }
+            } else {
+                Button(
+                    onClick = { navController.navigate("login") },
+                    modifier = Modifier.align(Alignment.CenterEnd)
+                ) {
+                    Text("Login")
+                }
             }
         }
 
