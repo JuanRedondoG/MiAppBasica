@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -23,6 +24,7 @@ fun LoginScreen(navController: NavHostController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isForgotPassword by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
     Scaffold(
         topBar = {
@@ -36,7 +38,6 @@ fun LoginScreen(navController: NavHostController) {
             )
         }
     ) { innerPadding ->
-        // --- Contenido Principal ---
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -46,13 +47,9 @@ fun LoginScreen(navController: NavHostController) {
         ) {
             Spacer(modifier = Modifier.height(32.dp))
 
-            // --- Icono ---
             AnimatedVisibility(!isForgotPassword) {
                 Box(
-                    modifier = Modifier
-                        .size(120.dp)
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)),
+                    modifier = Modifier.size(120.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
@@ -69,36 +66,44 @@ fun LoginScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // --- Campo de Email (siempre visible) ---
             OutlinedTextField(
                 value = email,
-                onValueChange = { email = it },
+                onValueChange = { email = it; errorMessage = null },
                 label = { Text("Email") },
                 modifier = Modifier.fillMaxWidth(),
-                singleLine = true
+                singleLine = true,
+                isError = errorMessage != null
             )
 
-            // --- Campo de Contraseña (solo para login) ---
             AnimatedVisibility(!isForgotPassword) {
                 Column {
                     Spacer(modifier = Modifier.height(16.dp))
                     OutlinedTextField(
                         value = password,
-                        onValueChange = { password = it },
+                        onValueChange = { password = it; errorMessage = null },
                         label = { Text("Contraseña") },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
-                        visualTransformation = PasswordVisualTransformation()
+                        visualTransformation = PasswordVisualTransformation(),
+                        isError = errorMessage != null
                     )
                 }
             }
 
+            AnimatedVisibility(errorMessage != null) {
+                Text(
+                    text = errorMessage ?: "",
+                    color = MaterialTheme.colorScheme.error,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+            }
+
             Spacer(modifier = Modifier.height(24.dp))
 
-            // --- Botón Principal (cambia según el modo) ---
             if (isForgotPassword) {
                 Button(
-                    onClick = { isForgotPassword = false /* Lógica de envío */ },
+                    onClick = { /* Lógica de envío */ },
                     modifier = Modifier.fillMaxWidth().height(50.dp)
                 ) {
                     Text("Enviar Instrucciones", fontSize = 16.sp)
@@ -106,10 +111,20 @@ fun LoginScreen(navController: NavHostController) {
             } else {
                 Button(
                     onClick = {
-                        if (email.isNotEmpty() && password.isNotEmpty()) {
-                            navController.navigate("inicio") {
-                                popUpTo("login") { inclusive = true }
+                        if (email.isNotBlank() && password.isNotBlank()) {
+                            if (email == "usuario@comicapp.com" && password == "123456") {
+                                // Extraemos el nombre de usuario del email
+                                val username = email.substringBefore("@")
+                                // Navegamos a la pantalla de inicio, pasando el nombre de usuario
+                                navController.navigate("inicio?username=$username") {
+                                    // Limpiamos el historial para que no se pueda volver al login
+                                    popUpTo(0)
+                                }
+                            } else {
+                                errorMessage = "Email o contraseña incorrectos."
                             }
+                        } else {
+                            errorMessage = "Por favor, rellena todos los campos."
                         }
                     },
                     modifier = Modifier.fillMaxWidth().height(50.dp)
@@ -120,15 +135,12 @@ fun LoginScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // --- Botones Secundarios ---
             if (isForgotPassword) {
                 TextButton(onClick = { isForgotPassword = false }) {
                     Text("Volver a Iniciar Sesión")
                 }
             } else {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     TextButton(onClick = { navController.navigate("register") }) {
                         Text("¿No tienes una cuenta? Regístrate")
                     }
