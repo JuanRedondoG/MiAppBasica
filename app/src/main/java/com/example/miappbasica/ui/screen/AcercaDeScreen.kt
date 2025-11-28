@@ -192,6 +192,40 @@ fun AcercaDeScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        //  NUEVO BOTÓN: Navegar a LoginScreen
+        Button(
+            onClick = {
+                // Navega a la ruta 'login'
+                navController.navigate("login") {
+                    // Opcional: Esto borra el historial y evita volver a las pantallas anteriores
+                    // después de salir de 'AcercaDe' y entrar al Login.
+                    // popUpTo(navController.graph.id) { inclusive = true }
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
+                .height(50.dp)
+        ) {
+            Text("Ir a Iniciar Sesión", fontSize = 16.sp)
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // NUEVO BOTÓN: Ir a Registrarse
+        OutlinedButton( // Usamos OutlinedButton para distinguirlo visualmente del botón principal
+            onClick = {
+                // Navega a la ruta 'registro'
+                navController.navigate("registro")
+            },
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
+                .height(50.dp)
+        ) {
+            Text("Crear una Cuenta", fontSize = 16.sp)
+        }
+
+        Spacer(modifier = Modifier.height(32.dp))
+
         // ===== BOTÓN PARA VOLVER AL INICIO =====
         Button(
             onClick = { navController.navigate("inicio") }, // Navega a la colección del usuario

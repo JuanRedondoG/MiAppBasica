@@ -50,6 +50,12 @@ fun getMisComics(): List<Comic> {
             titulo = stringResource(id = R.string.collection_walkingdead_titulo),
             autor = stringResource(id = R.string.collection_walkingdead_autor),
             sinopsis = stringResource(id = R.string.collection_walkingdead_desc)
+        ),
+        Comic(
+            id = 6,
+            titulo = stringResource(id = R.string.collection_walkingdead_titulo),
+            autor = stringResource(id = R.string.collection_walkingdead_autor),
+            sinopsis = stringResource(id = R.string.collection_walkingdead_desc)
         )
         // ...puedes añadir más cómics aquí
     )

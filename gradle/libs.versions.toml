@@ -1,7 +1,12 @@
 [versions]
 # Versiones de Plugins de Android y Kotlin
-agp = "8.13.0"
+agp = "8.13.1"
 kotlin = "1.9.22"
+room = "2.6.1"
+material = "1.12.0" # ya lo tenías, solo es para confirmar
+# ... tus otras versiones
+ksp = "1.9.22-1.0.17" # Asegúrate de tener una versión para KSP
+
 
 # Versiones de Librerías
 activityCompose = "1.8.2"
@@ -23,6 +28,10 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 
 # ---- Librerías de Compose (gestionadas por el BOM) ----
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -43,3 +52,5 @@ androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-te
 # ---- Plugins para Gradle ----
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+
