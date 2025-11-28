@@ -1,6 +1,5 @@
 package com.example.miappbasica.ui.screen
 
-// ===== IMPORTS =====
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource // <-- 1. ASEGÚRATE DE IMPORTAR ESTO
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,18 +37,17 @@ fun InicioScreen(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(220.dp)
-                .clickable { /* Navegar al cómic destacado */ },
+                .clickable { /* Podrías navegar al cómic destacado */ },
             contentAlignment = Alignment.BottomStart
         ) {
             Image(
                 painter = painterResource(id = R.drawable.comic_banner_placeholder),
-                contentDescription = stringResource(id = R.string.home_nuevo), // DESPUÉS: Descripción accesible
+                contentDescription = stringResource(id = R.string.home_nuevo),
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
             Text(
-                // ANTES: text = "¡NUEVO! Las Aventuras de Astro",
-                text = stringResource(id = R.string.home_nuevo), // <-- DESPUÉS
+                text = stringResource(id = R.string.home_nuevo),
                 style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
                 color = Color.White,
                 modifier = Modifier.padding(16.dp)
@@ -58,10 +56,28 @@ fun InicioScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        // ===== BOTÓN PARA INICIAR SESIÓN (CORREGIDO) =====
+        Button(
+            // 👇 LA CORRECCIÓN CLAVE ESTÁ AQUÍ 👇
+            // En lugar de mostrar un diálogo, navegamos a la pantalla de login.
+            // AppNavigation se encargará de mostrar LoginScreen con su ViewModel.
+            onClick = { navController.navigate("login") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .height(50.dp)
+        ) {
+            Text(
+                text = "Iniciar Sesión", // O puedes usar un string resource
+                fontSize = 16.sp
+            )
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
         // ===== SECCIÓN: CONTINUAR LEYENDO =====
         SeccionComics(
-            // ANTES: titulo = "Continuar Leyendo",
-            titulo = stringResource(id = R.string.home_continuar_leyendo), // <-- DESPUÉS
+            titulo = stringResource(id = R.string.home_continuar_leyendo),
             comics = listOf(R.drawable.comic_cover_1, R.drawable.comic_cover_2)
         )
 
@@ -69,27 +85,9 @@ fun InicioScreen(navController: NavHostController) {
 
         // ===== SECCIÓN: LOS MÁS POPULARES =====
         SeccionComics(
-            // ANTES: titulo = "Los más Populares",
-            titulo = stringResource(id = R.string.home_mas_populares), // <-- DESPUÉS
+            titulo = stringResource(id = R.string.home_mas_populares),
             comics = listOf(R.drawable.comic_cover_3, R.drawable.comic_cover_4, R.drawable.comic_cover_1)
         )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // ===== BOTÓN PARA IR A "MI COLECCIÓN" =====
-        Button(
-            onClick = { navController.navigate("coleccion") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .height(50.dp)
-        ) {
-            Text(
-                // ANTES: text = "Ver Mi Colección Completa",
-                text = stringResource(id = R.string.home_ver_coleccion), // <-- DESPUÉS
-                fontSize = 16.sp
-            )
-        }
     }
 }
 
@@ -98,7 +96,7 @@ fun InicioScreen(navController: NavHostController) {
 fun SeccionComics(titulo: String, comics: List<Int>) {
     Column(modifier = Modifier.padding(start = 16.dp)) {
         Text(
-            text = titulo, // Aquí no se cambia, porque ya recibe el string traducido como parámetro
+            text = titulo,
             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -127,9 +125,7 @@ fun ComicCard(imageResId: Int) {
     ) {
         Image(
             painter = painterResource(id = imageResId),
-            // La descripción del contenido de las portadas puede ser genérica
-            // o podrías pasarla como parámetro si cada cómic tuviera un nombre.
-            contentDescription = "Portada de cómic", // Por ahora, se puede quedar así.
+            contentDescription = "Portada de cómic",
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp),

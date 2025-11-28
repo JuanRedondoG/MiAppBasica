@@ -1,11 +1,14 @@
 plugins {
+    // En el archivo del módulo 'app', solo aplicamos los plugins.
+    // Gradle ya conoce las versiones gracias al archivo de la raíz del proyecto.
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
     namespace = "com.example.miappbasica"
-    compileSdk = 34 // Usando una versión estable y común
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.miappbasica"
@@ -13,7 +16,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -30,17 +32,18 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8" // Versión estable para Kotlin 1.9.22
+        // Esta versión es la correcta para Kotlin 1.9.22
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
     packaging {
         resources {
@@ -50,39 +53,37 @@ android {
 }
 
 dependencies {
-    // Definimos las versiones aquí para claridad
-    val coreKtxVersion = "1.12.0"
-    val appcompatVersion = "1.6.1" // CLAVE para el idioma
-    val activityComposeVersion = "1.8.2"
-    val lifecycleVersion = "2.7.0"
-    val composeBomVersion = "2024.02.01"
-    val navigationVersion = "2.7.7"
+    // Se utilizan los alias del catálogo de versiones (libs.versions.toml)
+    // para todas las dependencias. Esto centraliza la gestión.
 
-    implementation("com.google.android.material:material:1.12.0")
-    // Core & AppCompat (¡Fundamentales!)
-    implementation("androidx.core:core-ktx:$coreKtxVersion")
-    implementation("androidx.appcompat:appcompat:$appcompatVersion")
+    // Core, AppCompat, Lifecycle, Activity
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.material)
 
-    // Ciclo de vida y Activity
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
-    implementation("androidx.activity:activity-compose:$activityComposeVersion")
+    // BOM de Compose (Bill of Materials) - Gestiona las versiones de Compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
 
-    // BOM de Compose (Bill of Materials) - Gestiona las versiones de las librerías de Compose
-    implementation(platform("androidx.compose:compose-bom:$composeBomVersion"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
-    debugImplementation("androidx.compose.ui:ui-tooling")
+    // Navegación en Compose
+    implementation(libs.androidx.navigation.compose)
 
-    // Navegación
-    implementation("androidx.navigation:navigation-compose:$navigationVersion")
+    // Room (Base de Datos)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler) // Usando KSP en lugar de KAPT
 
     // Dependencias de Test
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:$composeBomVersion"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

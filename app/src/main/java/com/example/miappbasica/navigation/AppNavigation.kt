@@ -1,60 +1,94 @@
 package com.example.miappbasica.navigation
-// Paquete donde guardamos la lógica de navegación de la app
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.miappbasica.ui.screen.AcercaDeScreen
+import com.example.miappbasica.ComicApplication
+// Limpiamos los imports. Ahora solo se importan las pantallas necesarias.
+import com.example.miappbasica.ui.screen.AcercaDeScreen // Import explícito y correcto
 import com.example.miappbasica.ui.screen.ColeccionScreen
 import com.example.miappbasica.ui.screen.ConfiguracionScreen
 import com.example.miappbasica.ui.screen.InicioScreen
+import com.example.miappbasica.ui.screen.LoginScreen
+import com.example.miappbasica.ui.screen.RegistroScreen
+import com.example.miappbasica.ui.view.DatabaseDebugScreen
+import com.example.miappbasica.ui.viewmodel.LoginViewModel
+import com.example.miappbasica.ui.viewmodel.LoginViewModelFactory
 
-
-// Función principal de navegación de la app
 @Composable
 fun AppNavigation() {
-    // Controlador de navegación → maneja el historial y las rutas activas
     val navController = rememberNavController()
+    val viewModelFactory = LoginViewModelFactory(
+        (LocalContext.current.applicationContext as ComicApplication).database.comicDao()
+    )
 
-    // Scaffold es la estructura base de la UI en Compose
-    // Aquí lo usamos para colocar la barra de navegación inferior en todas las pantallas
     Scaffold(
-        bottomBar = { BottomNavBar(navController) } // Barra inferior personalizada
+        bottomBar = { BottomNavBar(navController) }
     ) { innerPadding ->
-        // NavHost → contiene todas las rutas (pantallas) de la app
         NavHost(
-            navController = navController,       // Controlador de navegación
-            startDestination = "inicio",         // Ruta inicial al abrir la app
-            modifier = Modifier.padding(innerPadding) // Respeta padding del Scaffold
+            navController = navController,
+            startDestination = "inicio",
+            modifier = Modifier.padding(innerPadding)
         ) {
-            // Pantalla de Inicio
+            // --- Definición de Rutas (Pantallas) Principales ---
             composable("inicio") { InicioScreen(navController) }
-
-            // Pantalla de Perfil
             composable("coleccion") { ColeccionScreen(navController) }
-
-            // Pantalla de Configuración
             composable("configuracion") { ConfiguracionScreen(navController) }
 
-            // Pantalla de Acerca de
-            composable("acerca") { AcercaDeScreen(navController) }
+            // La llamada a 'AcercaDe' ahora debería resolverse sin problemas.
+            composable("acerca") { AcercaDeScreen(navController = navController) }
+
+
+
+            // --- Rutas de Autenticación (Login y Registro) ---
+            composable("login") {
+                val loginViewModel: LoginViewModel = viewModel(factory = viewModelFactory)
+                val uiState by loginViewModel.uiState.collectAsState()
+
+                LoginScreen(
+                    navController = navController,
+                    uiState = uiState,
+                    onEmailChange = { loginViewModel.onRegistroChange(email = it) },
+                    onPasswordChange = { loginViewModel.onRegistroChange(pass = it) },
+                    onLoginClick = { loginViewModel.realizarLogin() },
+                    onNavigateToRegister = { navController.navigate("registro") },
+                    onNavigateToInicio = { navController.navigate("inicio") { popUpTo("inicio") { inclusive = true } } },
+                    onResetEvents = { loginViewModel.resetearEventos() }
+                )
+            }
+
+            composable("registro") {
+                val loginViewModel: LoginViewModel = viewModel(factory = viewModelFactory)
+                val uiState by loginViewModel.uiState.collectAsState()
+
+                RegistroScreen(
+                    navController = navController,
+                    uiState = uiState,
+                    onNombreChange = { loginViewModel.onRegistroChange(nombre = it) },
+                    onEmailChange = { loginViewModel.onRegistroChange(email = it) },
+                    onPasswordChange = { loginViewModel.onRegistroChange(pass = it) },
+                    onRegistroClick = { loginViewModel.realizarRegistro() },
+                    onNavigateToLogin = { navController.navigate("login") },
+                    onResetMessages = { loginViewModel.resetearEventos() }
+                )
+            }
+
+            // --- Ruta de Depuración ---
+            composable("databaseDebug") {
+                val loginViewModel: LoginViewModel = viewModel(factory = viewModelFactory)
+                DatabaseDebugScreen(
+                    viewModel = loginViewModel,
+                    navController = navController
+                )
+            }
         }
     }
 }
-/*
-Explicación general:
-
-rememberNavController() → crea el controlador que maneja la navegación.
-
-Scaffold → estructura base de la app (permite barra inferior, superior, FAB, etc.).
-
-BottomNavBar(navController) → muestra la barra inferior con los ítems definidos.
-
-NavHost → define las rutas y qué pantalla se debe mostrar en cada ruta.
-
-composable("ruta") → define cada pantalla y recibe el navController para navegar.
- */
