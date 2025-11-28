@@ -204,7 +204,7 @@ fun SeccionComics(titulo: String, comics: List<Int>) {
 }
 
 
-// ===== COMPOSABLE PARA LA TARJETA DE UN CÓMIC INDIVIDUAL =====
+// ====== COMPOSABLE PARA LA TARJETA DE UN CÓMIC INDIVIDUAL =====
 @Composable
 fun ComicCard(imageResId: Int) {
     Card(
