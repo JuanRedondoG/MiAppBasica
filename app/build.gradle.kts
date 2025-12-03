@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp") version "1.9.22-1.0.17"
 }
 
 android {
@@ -50,6 +51,16 @@ android {
 }
 
 dependencies {
+
+    val room_version = "2.6.1"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-ktx:$room_version") // Para usar Coroutines con Room
+    "ksp"("androidx.room:room-compiler:$room_version") // Usa 'ksp' en lugar de 'kapt'
+
+
+
+
     // Definimos las versiones aquí para claridad
     val coreKtxVersion = "1.12.0"
     val appcompatVersion = "1.6.1" // CLAVE para el idioma
