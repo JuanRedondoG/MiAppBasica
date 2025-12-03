@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.miappbasica.data.local.entity.User
 import com.example.miappbasica.data.repository.UserRepository
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
+
 
 /**
  * ViewModel para la pantalla de registro.
@@ -13,6 +15,17 @@ import kotlinx.coroutines.launch
  * @param userRepository El repositorio para realizar las operaciones de datos.
  */
 class RegisterViewModel(private val userRepository: UserRepository) : ViewModel() {
+
+
+    // ▼▼▼▼▼▼▼▼▼▼▼▼ INSERTA EL CÓDIGO AQUÍ ▼▼▼▼▼▼▼▼▼▼▼▼
+
+    // Esta propiedad expone un Flow con la lista de todos los usuarios.
+    // La UI (DataScreen) se suscribirá a este Flow para recibir actualizaciones.
+    val allUsers: Flow<List<User>> = userRepository.getAllUsers()
+
+    // ▲▲▲▲▲▲▲▲▲▲▲▲ FIN DEL CÓDIGO A INSERTAR ▲▲▲▲▲▲▲▲▲▲▲▲
+
+
 
     // Función para ser llamada desde la UI cuando el usuario presiona "Registrar"
     fun registerUser(name: String, email: String, pass: String) {
