@@ -1,7 +1,10 @@
 [versions]
 # Versiones de Plugins de Android y Kotlin
-agp = "8.13.0"
+agp = "8.13.1"
 kotlin = "1.9.22"
+
+ksp = "1.9.22-1.0.17"                 # Debe coincidir con la versión de Kotlin
+room = "2.8.4"
 
 # Versiones de Librerías
 activityCompose = "1.8.2"

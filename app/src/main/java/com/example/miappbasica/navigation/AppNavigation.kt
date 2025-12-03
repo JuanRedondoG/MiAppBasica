@@ -13,6 +13,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.miappbasica.ui.screen.*
+import com.example.miappbasica.ui.screen.RegisterScreen
 
 
 // Función principal de navegación de la app
@@ -72,6 +73,7 @@ fun AppNavigation() {
 
             // Pantalla de Acerca de
             composable("acerca") { AcercaDeScreen(navController) }
+
         }
     }
 }
