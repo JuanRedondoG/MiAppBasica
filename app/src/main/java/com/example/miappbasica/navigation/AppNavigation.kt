@@ -52,6 +52,9 @@ fun AppNavigation() {
             // Ruta para la pantalla de Registro
             composable("register") { RegisterScreen(navController) }
 
+            // Ruta para la pantalla de DataScreen
+            composable("data_screen") { DataScreen(navController) }
+
             // Pantalla de Inicio (ahora con un argumento opcional para el username)
             composable(
                 route = "inicio?username={username}",

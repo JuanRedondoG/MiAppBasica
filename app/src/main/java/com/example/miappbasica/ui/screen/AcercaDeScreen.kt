@@ -189,6 +189,20 @@ fun AcercaDeScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // ▼▼▼▼▼ BOTÓN PARA IR A DATASCREEN ▼▼▼▼▼
+        Button(
+            onClick = {
+                // Navega a la ruta que definiste para DataScreen
+                navController.navigate("data_screen")
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Visualizar Base de Datos")
+        }
+        // ▲▲▲▲▲ FIN DEL BOTÓN ▲▲▲▲▲
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         // BOTÓN PARA VOLVER AL INICIO
         Button(
             onClick = {

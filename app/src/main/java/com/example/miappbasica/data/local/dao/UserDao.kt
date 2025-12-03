@@ -34,6 +34,7 @@ interface UserDao {
     suspend fun getUserByEmail(email: String): User? // Devuelve un usuario o null si no lo encuentra
 
 
+
     // --- FUNCIÓN NUEVA ---
     /**
      * Busca un usuario por su dirección de email.

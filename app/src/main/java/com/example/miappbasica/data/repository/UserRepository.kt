@@ -2,6 +2,7 @@ package com.example.miappbasica.data.repository
 
 import com.example.miappbasica.data.local.dao.UserDao
 import com.example.miappbasica.data.local.entity.User
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Repositorio que maneja las operaciones de datos para los Usuarios.
@@ -27,6 +28,9 @@ class UserRepository(private val userDao: UserDao) {
     suspend fun getUserByEmail(email: String): User? {
         return userDao.getUserByEmail(email)
     }
+
+    fun getAllUsers(): Flow<List<User>> = userDao.getAllUsers()
+
 
 
 }
