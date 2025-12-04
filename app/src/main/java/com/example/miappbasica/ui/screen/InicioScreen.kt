@@ -90,7 +90,9 @@ fun InicioScreen(navController: NavHostController, username: String?) {
             }
 
             // Mostramos el saludo o el botón de Login
+            // Mostramos el saludo o el botón de Login
             if (username != null) {
+                // --- VISTA CUANDO EL USUARIO HA INICIADO SESIÓN ---
                 Row(
                     modifier = Modifier.align(Alignment.CenterEnd),
                     verticalAlignment = Alignment.CenterVertically
@@ -100,9 +102,11 @@ fun InicioScreen(navController: NavHostController, username: String?) {
                         style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
+
+                    // BOTÓN PARA CERRAR SESIÓN (CORREGIDO)
                     IconButton(onClick = {
-                        navController.navigate("inicio") {
-                            // Limpiamos el historial para que no se pueda volver atrás
+                        // Navega a la pantalla pública "home" y limpia todo el historial.
+                        navController.navigate("home") {
                             popUpTo(0)
                         }
                     }) {
@@ -113,13 +117,16 @@ fun InicioScreen(navController: NavHostController, username: String?) {
                     }
                 }
             } else {
+                // --- VISTA CUANDO NO HAY SESIÓN (BOTÓN DE LOGIN) ---
                 Button(
-                    onClick = { navController.navigate("login") },
+                    onClick = { navController.navigate("login_ultimate") },
                     modifier = Modifier.align(Alignment.CenterEnd)
                 ) {
                     Text("Login")
                 }
             }
+
+
         }
 
         // ===== BANNER DE NOVEDADES =====

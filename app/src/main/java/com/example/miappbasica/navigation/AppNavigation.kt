@@ -47,7 +47,16 @@ fun AppNavigation() {
             // --- RUTAS DE LA APP ---
 
             // Ruta para la pantalla de Login (sin barra de navegación)
-            composable("login") { LoginScreen(navController) }
+            //composable("login") { LoginScreen(navController) }
+
+            // --- AÑADE ESTA NUEVA RUTA PARA TU PANTALLA ULTIMATE ---
+            composable("login_ultimate") {
+                LoginScreenUltimate(navController = navController)
+            }
+
+
+
+
 
             // Ruta para la pantalla de Registro
             composable("register") { RegisterScreen(navController) }
