@@ -77,6 +77,7 @@ dependencies {
     // Ciclo de vida y Activity
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
     implementation("androidx.activity:activity-compose:$activityComposeVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:${lifecycleVersion}")   // <-- LÍNEA AÑADIDA
 
     // BOM de Compose (Bill of Materials) - Gestiona las versiones de las librerías de Compose
     implementation(platform("androidx.compose:compose-bom:$composeBomVersion"))
@@ -86,6 +87,7 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-extended") // <-- DEPENDENCIA AÑADIDA
     debugImplementation("androidx.compose.ui:ui-tooling")
+    
 
     // Navegación
     implementation("androidx.navigation:navigation-compose:$navigationVersion")
@@ -97,4 +99,9 @@ dependencies {
     androidTestImplementation(platform("androidx.compose:compose-bom:$composeBomVersion"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+
+
+
+
 }
